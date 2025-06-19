@@ -11,7 +11,6 @@ services:
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
-    platform: linux/arm64
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -30,7 +29,6 @@ services:
     entrypoint:
       - bash
       - -c
-    platform: linux/arm64
     command:
       - >
         ls -1 apps > sites/apps.txt;
@@ -63,7 +61,6 @@ services:
     entrypoint:
       - bash
       - -c
-    platform: linux/arm64
     command:
       - >
         wait-for-it -t 120 ${DB_HOST}:${DB_PORT};
@@ -92,7 +89,6 @@ services:
       DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
       DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       SITE_NAME: ${SITE_NAME}
-
   db:
     image: mariadb:${MARIADB_VERSION:-10.6}
     networks:
@@ -115,7 +111,6 @@ services:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
     volumes:
       - db-data:/var/lib/mysql
-    platform: linux/arm64
     ports:
       - "${DB_EXTERNAL_PORT}:${DB_PORT}"
 
@@ -142,7 +137,6 @@ services:
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
-    platform: linux/arm64
     ports:
       - "${FRONTEND_PORT}:8080"
 
@@ -161,7 +155,6 @@ services:
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
-    platform: linux/arm64
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -181,7 +174,6 @@ services:
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
-    platform: linux/arm64
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -197,7 +189,6 @@ services:
       - redis-queue-data:/data
     ports:
       - "${REDIS_QUEUE_PORT}:6379"
-    platform: linux/arm64
     command: redis-server --port 6379
 
   redis-cache:
@@ -209,7 +200,6 @@ services:
         condition: on-failure
     ports:
       - "${REDIS_CACHE_PORT}:6379"
-    platform: linux/arm64
     command: redis-server --port 6379
 
   scheduler:
@@ -225,7 +215,6 @@ services:
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
-    platform: linux/arm64
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -243,7 +232,6 @@ services:
     volumes:
       - sites:/home/frappe/frappe-bench/sites
       - logs:/home/frappe/frappe-bench/logs
-    platform: linux/arm64
     ports:
       - "${WEBSOCKET_PORT}:9002"
     environment:
